@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Maharashtra Tourism Guide</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+<style>
+/* GENERAL RESET */
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
+body{background:linear-gradient(135deg,#0f172a,#1e3a8a);color:white;scroll-behavior:smooth;line-height:1.6;}
+a{text-decoration:none;color:#38bdf8;}
+
+/* HEADER HERO */
+header{position:relative;height:70vh;overflow:hidden;}
+header img{width:100%;height:100%;object-fit:cover;position:absolute;top:0;left:0;opacity:0.8;}
+header .hero-text{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center;}
+header h1{font-size:3.5rem;background:linear-gradient(to right,#38bdf8,#a78bfa);-webkit-background-clip:text;color:transparent;text-shadow:2px 2px 10px rgba(0,0,0,0.6);}
+header p{font-size:1.5rem;margin-top:10px;text-shadow:1px 1px 5px rgba(0,0,0,0.7);}
+
+/* NAVIGATION */
+nav{display:flex;justify-content:center;gap:15px;padding:15px 0;flex-wrap:wrap;background:rgba(0,0,0,0.3);}
+nav button{padding:10px 18px;border-radius:25px;border:none;background:rgba(255,255,255,0.15);color:white;font-weight:500;cursor:pointer;transition:0.3s;}
+nav button:hover{background:#facc15;color:black;transform:scale(1.05);}
+
+/* SEARCH */
+.search-box{text-align:center;margin:20px;}
+.search-box input{width:60%;padding:12px;border-radius:30px;border:none;font-size:16px;outline:none;background:rgba(255,255,255,0.1);color:white;}
+
+/* SECTIONS */
+section{padding:60px 20px;opacity:0;transform:translateY(50px);transition:all 1s ease;}
+section.active{opacity:1;transform:translateY(0);}
+section h2{text-align:center;margin-bottom:30px;font-size:2.5rem;color:#38bdf8;}
+
+/* FILTER BUTTONS */
+.filter-buttons{text-align:center;margin-bottom:30px;}
+.filter-buttons button{margin:5px;padding:10px 18px;border:none;border-radius:25px;background:rgba(255,255,255,0.2);cursor:pointer;transition:0.3s;}
+.filter-buttons button:hover{background:#facc15;color:black;transform:scale(1.05);}
+
+/* GRID CARDS */
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:25px;}
+.card{background:linear-gradient(135deg,rgba(255,255,255,0.1),rgba(255,255,255,0.05));backdrop-filter:blur(15px);border-radius:20px;overflow:hidden;transition:0.5s;position:relative;box-shadow:0 10px 25px rgba(0,0,0,0.4);}
+.card:hover{transform:scale(1.05) translateY(-10px);box-shadow:0 15px 35px rgba(0,0,0,0.6);}
+.card img{width:100%;height:200px;object-fit:cover;}
+.card-content{padding:20px;}
+.card-content h3{color:#38bdf8;margin-bottom:10px;}
+.card-content p{margin-bottom:8px;font-size:14px;}
+.card-content iframe{width:100%;height:200px;border-radius:15px;margin-top:10px;}
+.badge{position:absolute;top:15px;right:15px;background:#facc15;color:black;padding:5px 10px;border-radius:12px;font-size:12px;font-weight:bold;}
+
+/* FOOTER */
+footer{text-align:center;padding:25px;background:linear-gradient(to right,#38bdf8,#a78bfa);color:black;font-weight:600;margin-top:20px;}
+
+/* CONTACT FORM */
+.contact-form{max-width:100%;margin:auto;}
+.contact-form input, .contact-form textarea{width:100%;padding:12px;margin:10px 0;border-radius:10px;border:none;}
+.contact-form button{padding:12px 20px;border:none;border-radius:25px;background:#38bdf8;color:black;font-weight:bold;cursor:pointer;transition:0.3s;}
+.contact-form button:hover{background:#facc15;}
+</style>
+</head>
+<body>
+
+<header>
+<img src="https://source.unsplash.com/1600x900/?maharashtra,travel" alt="Maharashtra Hero">
+<div class="hero-text">
+<h1>Explore Maharashtra</h1>
+<p>Discover history, culture & nature</p>
+</div>
+</header>
+
+<nav>
+<button onclick="showSection('home')">Home</button>
+<button onclick="showSection('destinations')">Destinations</button>
+<button onclick="showSection('tips')">Travel Tips</button>
+<button onclick="showSection('festivals')">Festivals</button>
+<button onclick="showSection('itineraries')">Itineraries</button>
+<button onclick="showSection('contact')">Contact</button>
+</nav>
+
+<div class="search-box">
+<input type="text" id="search" placeholder="Search destinations...">
+</div>
+
+<section id="home">
+<h2>Welcome</h2>
+<p style="text-align:center;max-width:700px;margin:auto;">Plan your perfect Maharashtra trip with interactive maps, itineraries, festival info, and tips!</p>
+</section>
+
+<section id="destinations">
+<h2>Popular Destinations</h2>
+<div class="filter-buttons">
+<button onclick="filterDestinations('All')">All</button>
+<button onclick="filterDestinations('Hill Station')">Hill Station</button>
+<button onclick="filterDestinations('Beach')">Beach</button>
+<button onclick="filterDestinations('Historical')">Historical</button>
+<button onclick="filterDestinations('Religious')">Religious</button>
+<button onclick="filterDestinations('Wildlife')">Wildlife</button>
+</div>
+<div class="grid" id="destinationsGrid"></div>
+</section>
+
+<section id="tips">
+<h2>Travel Tips</h2>
+<div class="grid">
+  <div class="card">
+    <div class="card-content">
+      <h3>Packing & Essentials</h3>
+      <p>🎒 Carry essentials like water, first-aid kit, and power bank.</p>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-content">
+      <h3>Plan Ahead</h3>
+      <p>📅 Plan your itinerary and book tickets in advance.</p>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-content">
+      <h3>Safety</h3>
+      <p>🧳 Travel light, keep your belongings safe, and stay alert.</p>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-content">
+      <h3>Connectivity</h3>
+      <p>📱 Download offline maps and useful apps for navigation.</p>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-content">
+      <h3>Payments</h3>
+      <p>💳 Carry both cash and digital payment options for convenience.</p>
+    </div>
+  </div>
+</div>
+</section>
+
+<section id="festivals">
+<h2>Festivals & Events</h2>
+<div class="grid">
+  <div class="card">
+    <div class="card-content">
+      <h3>Ganesh Chaturthi</h3>
+      <p>🎉 Celebrated across Maharashtra with grand processions.</p>
+      <p><strong>When:</strong> August–September</p>
+      <p><strong>Location:</strong> Pan-Maharashtra</p>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-content">
+      <h3>Pune International Film Festival</h3>
+      <p>🎭 A cultural hub for cinema lovers.</p>
+      <p><strong>When:</strong> January</p>
+      <p><strong>Location:</strong> Pune</p>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-content">
+      <h3>Elephanta Festival</h3>
+      <p>🎶 Music and dance festival on Elephanta Island.</p>
+      <p><strong>When:</strong> February</p>
+      <p><strong>Location:</strong> Elephanta Island, Mumbai</p>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-content">
+      <h3>Nagpur Orange Festival</h3>
+      <p>🎪 Celebrates the famous oranges of Nagpur with fun activities.</p>
+      <p><strong>When:</strong> December</p>
+      <p><strong>Location:</strong> Nagpur</p>
+    </div>
+  </div>
+</div>
+</section>
+
+<section id="itineraries">
+<h2>Suggested Itineraries</h2>
+<div class="grid">
+<div class="card"><div class="card-content"><h3>3-Day Mumbai & Lonavala</h3><p>Day 1: Mumbai sightseeing, Day 2: Lonavala waterfalls & forts, Day 3: Relax & shopping.</p></div></div>
+<div class="card"><div class="card-content"><h3>5-Day Pune & Hill Stations</h3><p>Pune city tour + Sinhagad Fort + Mahabaleshwar & Matheran exploration.</p></div></div>
+<div class="card"><div class="card-content"><h3>7-Day Maharashtra Tour</h3><p>Mumbai, Pune, Lonavala, Alibaug, Mahabaleshwar, Ajanta & Ellora Caves.</p></div></div>
+</div>
+</section>
+
+<section id="contact">
+<h2>Contact Us</h2>
+<div class="grid">
+  <div class="card">
+    <div class="card-content">
+      <h3>Our Office</h3>
+      <p>🏢 Maharashtra Tourism Development Corporation</p>
+      <p>📍 Mumbai, Maharashtra, India</p>
+      <p>📞 +91 22 1234 5678</p>
+      <p>✉️ info@maharashtratourism.in</p>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-content">
+      <h3>Send a Message</h3>
+      <form class="contact-form" onsubmit="submitForm(event)">
+        <input type="text" id="name" placeholder="Your Name" required>
+        <input type="email" id="email" placeholder="Your Email" required>
+        <textarea id="message" rows="5" placeholder="Your Message" required></textarea>
+        <button type="submit">Send Message</button>
+      </form>
+    </div>
+  </div>
+</div>
+</section>
+
+<footer>🌍 Maharashtra Tourism | Built with ❤️</footer>
+
+<script>
+const destinations = [
+{name:"Mumbai",type:"City",desc:"Gateway of India, Marine Drive, Bollywood & nightlife.",address:"Mumbai, Maharashtra, India",history:"Formerly Bombay, commercial hub since colonial times.",img:"https://source.unsplash.com/500x300/?mumbai"},
+{name:"Mahabaleshwar",type:"Hill Station",desc:"Valleys, strawberry farms & scenic viewpoints.",address:"Satara District, Maharashtra",history:"British summer resort, panoramic views.",img:"https://source.unsplash.com/500x300/?mahableshwar"},
+{name:"Lonavala",type:"Hill Station",desc:"Waterfalls, forts & scenic drives.",address:"Pune District, Maharashtra",history:"Monsoon beauty and trekking trails.",img:"https://source.unsplash.com/500x300/?lonavala"},
+{name:"Alibaug",type:"Beach",desc:"Beaches & coastal forts.",address:"Raigad District, Maharashtra",history:"Historic coastal town with forts.",img:"https://source.unsplash.com/500x300/?alibaug"},
+{name:"Ajanta & Ellora Caves",type:"Historical",desc:"UNESCO rock-cut caves.",address:"Aurangabad, Maharashtra",history:"Ancient Buddhist, Hindu and Jain caves.",img:"https://source.unsplash.com/500x300/?ajanta"},
+{name:"Tadoba Tiger Reserve",type:"Wildlife",desc:"Tiger safari & wildlife.",address:"Chandrapur District, Maharashtra",history:"One of oldest national parks in Maharashtra.",img:"https://source.unsplash.com/500x300/?tadoba"},
+{name:"Shirdi",type:"Religious",desc:"Sai Baba Temple pilgrimage.",address:"Ahmednagar District, Maharashtra",history:"Famous Sai Baba temple.",img:"https://source.unsplash.com/500x300/?shirdi"},
+];
+
+const grid=document.getElementById("destinationsGrid");
+
+function displayDestinations(list){
+grid.innerHTML="";
+list.forEach(d=>{
+const div=document.createElement("div");
+div.className="card";
+div.innerHTML=`<div class="badge">${d.type}</div>
+<img src="${d.img}" alt="${d.name}">
+<div class="card-content">
+<h3>${d.name}</h3>
+<p><strong>Address:</strong> ${d.address}</p>
+<p>${d.desc}</p>
+<p>${d.history}</p>
+<iframe src="https://maps.google.com/maps?q=${encodeURIComponent(d.address)}&output=embed" loading="lazy"></iframe>
+</div>`;
+grid.appendChild(div);
+});
+}
+
+displayDestinations(destinations);
+
+function showSection(id){
+document.querySelectorAll("section").forEach(s=>s.classList.remove("active"));
+document.getElementById(id).classList.add("active");
+}
+showSection('home');
+
+document.getElementById("search").addEventListener("keyup",function(){
+const val = this.value.toLowerCase();
+
+// filter data
+const filtered = destinations.filter(d => 
+    d.name.toLowerCase().includes(val)
+);
+
+// always show destinations section
+function showSection(id){
+    // hide all sections
+    document.querySelectorAll("section").forEach(sec=>{
+        sec.classList.remove("active");
+        sec.style.opacity = "0";
+        sec.style.transform = "translateY(50px)";
+    });
+
+    // show selected
+    const selected = document.getElementById(id);
+    selected.classList.add("active");
+    selected.style.opacity = "1";
+    selected.style.transform = "translateY(0)";
+
+    // scroll to top smoothly
+    window.scrollTo({
+        top: selected.offsetTop - 60,
+        behavior: "smooth"
+    });
+}
+
+// display results
+displayDestinations(filtered);
+});
+
+function filterDestinations(type){
+if(type==="All") displayDestinations(destinations);
+else displayDestinations(destinations.filter(d=>d.type===type));
+}
+
+// Scroll fade-in effect
+/*window.addEventListener("scroll",()=>{
+document.querySelectorAll("section").forEach(s=>{
+if(s.getBoundingClientRect().top < window.innerHeight - 100) s.classList.add("active");
+});
+});*/
+
+// Contact form
+function submitForm(e){
+e.preventDefault();
+alert("Thank you! Your message has been submitted.");
+document.getElementById("name").value="";
+document.getElementById("email").value="";
+document.getElementById("message").value="";
+}
+</script>
+
+</body>
+</html>
